@@ -18,17 +18,28 @@
 
 ---
 
-```
-┌──────────────┐     POST /tasks     ┌──────────────────┐
-│  Your Phone  │ ──────────────────► │                  │
-│  Your Laptop │                     │   agentflow VM   │
-│  Your Tablet │ ◄────────────────── │                  │
-└──────────────┘   SSE event stream  │  ┌────────────┐  │
-                                      │  │ Worktree 1 │──► PR #1
-                                      │  ├────────────┤  │
-                                      │  │ Worktree 2 │──► PR #2
-                                      │  └────────────┘  │
-                                      └──────────────────┘
+```mermaid
+flowchart TD
+    subgraph Devices["Your Devices"]
+        direction TB
+        Phone["Your Phones"]
+        Laptop["Your Laptops"]
+        Tablet["Your Tablets"]
+    end
+    subgraph AF["agentflow VM"]
+        direction LR
+        W1["Worktree 1"]
+        W2["Worktree 2"]
+    end
+    subgraph PRs[" "]
+        direction TB
+        PR1["PR #1"]
+        PR2["PR #2"]
+    end
+    Devices -- "POST /tasks" --> AF
+    AF -- "SSE event stream" --> Devices
+    W1 --> PR1
+    W2 --> PR2
 ```
 
 ---
