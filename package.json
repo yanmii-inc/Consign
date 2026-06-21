@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
+    "init": "bun run src/index.ts init",
     "build": "bun build src/index.ts --compile --target=bun --outfile=consign",
     "lint": "bun x tsc --noEmit",
     "deploy:ui": "cd agentflow-ui && npm run build && firebase deploy --only hosting"

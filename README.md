@@ -68,18 +68,16 @@ flowchart TD
 # Install
 git clone <your-repo>/consign.git && cd consign && bun install
 
-# Make the `consign` CLI available globally
-bun link
+# Stamp a repo (run inside the project you want consign to manage)
+cd /path/to/your-project
+bun run /path/to/consign/src/index.ts init     # or use the alias below
+# Or from the consign repo:  bun run init
 
-# Stamp a repo with a sign file (run inside your project)
-consign init                         # creates .consign.json
-
-# Or set up a workspace root for auto-discovery
+# Set up workspace roots for auto-discovery on the server
 export WORKSPACE_ROOTS='["~/my-projects"]'
-consign init ~/my-projects/my-app    # stamps a specific directory
 
-# Start the server (scans workspace roots on startup)
-bun run src/index.ts
+# Start the server
+cd /path/to/consign && bun run start
 
 # Manual project creation still works too
 curl -X POST http://localhost:3000/projects \
