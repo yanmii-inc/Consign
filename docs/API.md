@@ -29,9 +29,9 @@ Returns `200`:
     { "id": "gemini-1.5-flash", "label": "Gemini 1.5 Flash" }
   ],
   "glm": [
-    { "id": "glm-4-air", "label": "GLM-4 Air" },
-    { "id": "glm-4-plus", "label": "GLM-4 Plus" },
-    { "id": "glm-4-flash", "label": "GLM-4 Flash" }
+    { "id": "glm-5", "label": "GLM-5" },
+    { "id": "glm-4.7", "label": "GLM-4.7" },
+    { "id": "glm-4.7-flash", "label": "GLM-4.7 Flash" }
   ]
 }
 ```
@@ -141,7 +141,7 @@ POST /agent-profiles
 |---|---|---|
 | `claude` | `credentials_encrypted` or `ANTHROPIC_API_KEY` env | `claude-sonnet-4-5-20250929` |
 | `gemini` | `credentials_encrypted` or `GEMINI_API_KEY` env | `gemini-2.0-flash` |
-| `glm` | `credentials_encrypted` or `GLM_API_KEY` env | `glm-4-air` |
+| `glm` | `credentials_encrypted` or `GLM_API_KEY` env | `glm-5` |
 
 The `model` field is optional. When omitted, the provider's default model is used.
 

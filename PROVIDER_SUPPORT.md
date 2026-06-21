@@ -60,7 +60,7 @@ curl -X POST http://localhost:3000/agent-profiles \
     "name": "my-glm",
     "agent_type": "glm",
     "credentials_encrypted": "sk-...",
-    "model": "glm-4-air"
+    "model": "glm-5"
   }'
 ```
 
@@ -124,7 +124,7 @@ This ensures consistent behavior across providers.
 - OpenAI-compatible format
 - REST API: `open.bigmodel.cn/api/paas/v4/chat/completions`
 - Function calling for tool use
-- Default model: `glm-4-air`
+- Default model: `glm-5`
 
 ### Task Complexity Preflight
 
