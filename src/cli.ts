@@ -51,9 +51,8 @@ async function scanCommand(roots: string[]): Promise<void> {
   if (roots.length === 0) {
     roots = [process.cwd()];
   }
-  process.env['WORKSPACE_ROOTS'] = JSON.stringify(roots);
 
-  const result = scanWorkspaces(db);
+  const result = scanWorkspaces(db, roots);
   db.close();
 
   console.log(`Scanned: ${roots.join(', ')}`);

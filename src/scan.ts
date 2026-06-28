@@ -75,8 +75,10 @@ export interface ScanResult {
   projects: ReturnType<Db['listProjects']>;
 }
 
-export function scanWorkspaces(db: Db): ScanResult {
-  const roots = getWorkspaceRoots();
+export function scanWorkspaces(db: Db, roots?: string[]): ScanResult {
+  if (!roots || roots.length === 0) {
+    roots = getWorkspaceRoots();
+  }
   const foundPaths: Set<string> = new Set();
   let created = 0;
   let updated = 0;
