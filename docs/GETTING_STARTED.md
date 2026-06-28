@@ -109,16 +109,21 @@ Or create a config file at `~/.consign/config.json`:
 }
 ```
 
-Default: `~/consign-workspace`.
+Default: the server's current working directory (`process.cwd()`).
 
 The server scans these roots on startup and on every `POST /projects/scan` call. Projects whose `.consign.json` is removed are automatically deleted from the database.
 
 ```bash
 # Re-scan without restarting
 curl -X POST http://localhost:3000/projects/scan
+
+# Scan specific directories
+curl -X POST http://localhost:3000/projects/scan \
+  -H 'Content-Type: application/json' \
+  -d '{"roots": ["~/code", "~/work"]}'
 ```
 
-Returns the scan result with the full project list:
+Returns the scan result:
 
 ```json
 {
@@ -128,6 +133,20 @@ Returns the scan result with the full project list:
   "projects": [ ... ]
 }
 ```
+
+#### CLI Scan
+
+The `consign scan` command runs a scan directly (no server needed):
+
+```bash
+# Scan the current directory
+consign scan
+
+# Scan specific directories
+consign scan ~/code ~/work
+```
+
+It creates a temporary database connection, runs the scan, and prints results. Useful when you're not running the server. Consumes the same `CONSIGN_DB_PATH` and `WORKSPACE_ROOTS` the server uses.
 
 ### Option B: Manual API (no sign file)
 

@@ -68,7 +68,22 @@ Returns `201` with the created project (including any targets).
 POST /projects/scan
 ```
 
-Scans every directory in `WORKSPACE_ROOTS` (env var, `~/.consign/config.json`, or default `~/consign-workspace`) for `.consign.json` sign files. Upserts discovered projects (keyed by `local_path`) and deletes stale scan-sourced projects whose sign file was removed.
+Scans directories for `.consign.json` sign files. Upserts discovered projects (keyed by `local_path`) and deletes stale scan-sourced projects whose sign file was removed.
+
+The roots to scan are resolved in this order:
+
+1. `roots` field in the request body (optional)
+2. `WORKSPACE_ROOTS` env var (JSON array or comma-separated)
+3. `~/.consign/config.json` → `workspaceRoots`
+4. Server's current working directory (`process.cwd()`)
+
+Request body (optional):
+
+```json
+{
+  "roots": ["~/code", "~/work"]
+}
+```
 
 Returns `200`:
 
@@ -82,7 +97,7 @@ Returns `200`:
       "id": "uuid",
       "name": "my-app",
       "repo_url": "https://github.com/you/my-app.git",
-      "local_path": "/home/you/consign-workspace/my-app",
+      "local_path": "/home/you/code/my-app",
       "agent_profile_id": null,
       "source": "scan",
       "created_at": "2026-06-21 10:11:16"
@@ -316,6 +331,41 @@ DELETE /tasks/:id
 ```
 
 Kills the running agent, cleans up the worktree, marks as failed. Returns `204`.
+
+## CLI
+
+### Scan
+
+```
+consign scan [dir...]
+```
+
+Runs a workspace scan from the CLI (no server needed). Uses the same `CONSIGN_DB_PATH` and root resolution as the API endpoint.
+
+| Args | Behavior |
+|---|---|
+| _(none)_ | Scans `process.cwd()` |
+| `dir...` | Scans the given directories |
+
+```bash
+consign scan
+consign scan ~/code ~/work
+```
+
+### Init
+
+```
+consign init [name]
+```
+
+Creates a `.consign.json` sign file in the current directory.
+
+| Args | Behavior |
+|---|---|
+| _(none)_ | Uses the directory name as the project name |
+| `name` | Overrides the project name |
+
+Detects `git remote get-url origin` and writes it as `repo_url` if available.
 
 ## Tokens
 

@@ -72,6 +72,9 @@ curl -L https://github.com/<your-org>/consign/releases/latest/download/consign-d
 # Stamp any repo
 consign init
 
+# Scan the current directory for projects
+consign scan
+
 # Start the server
 consign
 ```
