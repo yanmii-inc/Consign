@@ -161,6 +161,8 @@ export interface AgentMessage {
   /** File path / diff (file_change). */
   path?: string;
   diff?: string;
+  /** Marks the final `done` for a task stream (close signal); per-turn `done`s leave it open. */
+  terminal?: boolean;
 }
 
 /**
